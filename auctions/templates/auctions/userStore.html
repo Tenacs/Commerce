@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ username }}</h2>
+
+    <div class="container-fluid text-center">
+        {% for listing in listings %}
+        <div class="row border">
+            <div class="col-4">
+                {% if listing.image %}
+                    <img src="{{ listing.image }}" class="img-fluid p-3" width="150" alt="{{ listing.title }}">
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <h6><a href="{% url 'listing' listing.id%}">{{ listing.title }}</a></h6>
+
+                <!-- Check if there are any bids for the listing -->
+                {% if listing.bids.all %}
+                <!-- Get the highest bid for the listing -->
+                    {% with highest_bid=listing.bids.all|dictsort:"bid"|last %}
+                        <h6>Price: ${{ highest_bid.bid }}</h6>
+                    {% endwith %}
+                {% else %}
+                    <h6>Price: ${{ listing.startingBid }}</h6>
+                {% endif %}
+                
+                <h6>{{ listing.description }}</h6>
+                <P class="blockquote-footer"> Created {{ listing.timestamp }}</P>
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

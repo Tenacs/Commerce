@@ -1,0 +1,47 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Create Listing</h2>
+
+    {% if user.is_authenticated %}
+
+
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            
+            <label for="title" class="form-label">Title</label>
+            <input class='form-control col-4' maxlength="50" placeholder='Enter title for your page' name="title" required=True>
+            
+            <label for="description" class="form-label">Description</label>
+            <textarea class='form-control col-10' rows=2 name="description" required="True"></textarea>
+            
+            <label for="bid" class="form-label">Starting Bid</label>
+            <input type="number" class='form-control col-4' name="bid" required="True" min="0" value="0" step=".01">
+            
+            <label for="image" class="form-label">Image Link</label>
+            <input class='form-control col-4' maxlength="255" placeholder='Paste image link here' name="image">
+
+            <select class="form-select" aria-label="Category" name="category" required>
+                <option value="none" selected>Category</option>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <option value="home">Home</option>
+                <option value="books">Books</option>
+                <option value="toys">Toys</option>
+                <option value="beauty">Beauty</option>
+                <option value="sports">Sports</option>
+                <option value="furniture">Furniture</option>
+                <option value="jewelry">Jewelry</option>
+                <option value="automotive">Automotive</option>
+              </select>
+        </div>
+        <input type="submit" value="Create">
+    </form>
+
+
+
+    {% endif %}
+
+{% endblock %}
